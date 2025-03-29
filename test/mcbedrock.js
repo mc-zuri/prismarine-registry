@@ -11,7 +11,7 @@ async function main (version = '1.19.63') {
       registry.handleStartGame(params)
 
       if (params.itemstates) {
-        console.log('Loaded item palette', registry.items)
+        console.log('Loaded item palette')
 
         const reEncoded = registry.writeItemStates()
         assert.deepEqual(

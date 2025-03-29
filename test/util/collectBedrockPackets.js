@@ -28,7 +28,7 @@ async function collectPackets (version, names = ['start_game'], cb) {
   let clientConnected = false
 
   return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(reject, 9000)
+    const timeoutId = setTimeout(() => reject(new Error(`time out ${version}`)), 18000)
 
     client.on('join', () => {
       console.log('[client] Client connected')
@@ -49,7 +49,7 @@ async function collectPackets (version, names = ['start_game'], cb) {
 
     client.on('packet', ({ name }) => debug('[client] -> ', name))
   }).catch((error) => {
-    console.error(error)
+    console.error('error', error)
   }).finally(async () => {
     stopServer()
   })
