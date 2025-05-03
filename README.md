@@ -47,24 +47,46 @@ Mapping to dimension data object containing dimension `name`, `minY` and `height
 
 #### loadItemStates / writeItemStates
 
-* loads/writes data from an item states array inside the bedrock start game packet.
+* loads/writes data from an item states array inside the bedrock start game and/or item registry packet.
 
 ```js
-// In a client
+// Client < 1.21.70
 const { createClient } = require('bedrock-protocol');
-const registry = require('prismarine-registry')('bedrock_1.19.50');
-
+const registry = require('prismarine-registry')('bedrock_1.21.0');
 const client = createClient({
   'host': '127.0.0.1'
 })
-
-client.on('start_game', ({ itemstates }) => {
-  registry.loadItemStates(itemstates);
+client.on('start_game', ({block_network_ids_are_hashes, itemstates }) => {
+  registry.handleStartGame({block_network_ids_are_hashes, itemstates});
 })
 
-// In a server
+// Client >= 1.21.70
+const { createClient } = require('bedrock-protocol');
+const registry = require('prismarine-registry')('bedrock_1.21.90');
+const client = createClient({
+  'host': '127.0.0.1'
+})
+client.on('start_game', (params) => {
+  registry.handleStartGame(params);
+})
+client.on('item_registry', ({ itemstates }) => {
+  registry.handleItemRegistry(itemstates);
+})
+```
+
+```js
+// Server < 1.21.70
 server.on('connect', (client) => {
+  const block_network_ids_are_hashes: boolean = false;
   const itemstates = registry.writeItemStates()
-  client.write('start_game', { ...startGamePacket, itemstates })
+  client.write('start_game', { ...startGamePacket, block_network_ids_are_hashes, itemstates });
+})
+
+// Server >= 1.21.70
+server.on('connect', (client) => {
+  const block_network_ids_are_hashes: boolean = false;
+  client.write('start_game', { ...startGamePacket, block_network_ids_are_hashes });
+  const itemstates = registry.writeItemStates()
+  client.write('item_registry', { itemstates });
 })
 ```
