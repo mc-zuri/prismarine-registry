@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/PrismarineJS/prismarine-registry#readme",
   "devDependencies": {
-    "bedrock-protocol": "^3.22.0",
+    "bedrock-protocol": "^3.50.0",
     "debug": "^4.3.3",
     "minecraft-bedrock-server": "^1.1.2",
     "minecraft-protocol": "^1.30.0",
