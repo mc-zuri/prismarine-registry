@@ -1,8 +1,11 @@
 {
-  "name": "prismarine-registry",
+  "name": "@mc-zuri/prismarine-registry",
   "version": "1.11.0",
   "description": "Prismarine Registry",
   "main": "lib/index.js",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "test": "mocha --reporter spec --bail --exit",
     "pretest": "npm run lint",
@@ -11,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PrismarineJS/prismarine-registry.git"
+    "url": "https://github.com/mc-zuri/prismarine-registry.git"
   },
   "keywords": [
     "prismarine",
