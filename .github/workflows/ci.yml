@@ -33,4 +33,6 @@ jobs:
         wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
         sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
     - run: npm install
+    - name: TEMP use prismarine-block#129
+      run: cd node_modules && rm -rf prismarine-block && git clone -b fix/hashed-runtime-metadata --depth 1 https://github.com/Pix3lPirat3/prismarine-block
     - run: npm test
