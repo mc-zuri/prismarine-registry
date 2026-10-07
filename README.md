@@ -77,6 +77,32 @@ server.on('connect', (client) => {
 })
 ```
 
+#### Item components
+
+Each item state has `component_based`, and from 1.21.60 a `version` (`legacy`, `data_driven` or `none`)
+and an `nbt` with the components of the item. The loaded items keep them as `componentBased`,
+`version` and `nbt`, and `writeItemStates()` writes them back unchanged.
+`component_based` is only known from the palette: custom items with components are component
+based, and so are some vanilla items, even without components (e.g. arrows, music discs).
+
+Items that are not in minecraft-data (custom items) take these fields from their components:
+
+* `stackSize`: `item_properties.max_stack_size`, or `minecraft:max_stack_size` of a legacy item
+* `maxDurability`: `max_durability` of `minecraft:durability`
+* `displayName`: `minecraft:display_name`, translated when it is a language key
+* `repairWith`: the item names of `minecraft:repairable` (not the ones given by a tag)
+
+The `nbt` is typed by `version` (`ItemState`, `SimplifiedItemNbt` in [lib/index.d.ts](lib/index.d.ts)).
+
+```js
+const nbt = require('prismarine-nbt')
+
+const item = registry.itemsByName['custom:ruby_sword']
+item.maxDurability // 250
+const { components } = nbt.simplify(item.nbt)
+components['minecraft:durability'].max_durability // 250
+```
+
 #### handleStartGame and hashed runtime ids
 
 `handleStartGame(packet)` (re)builds the block registry from the `start_game` packet.

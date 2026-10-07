@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/PrismarineJS/prismarine-registry#readme",
   "devDependencies": {
+    "@types/node": "^24.1.0",
     "bedrock-protocol": "^3.22.0",
     "debug": "^4.3.3",
     "minecraft-bedrock-server": "^1.1.2",
@@ -31,7 +32,8 @@
     "minecraft-wrap": "^1.4.0",
     "mocha": "^11.0.1",
     "prismarine-registry": "file:.",
-    "standard": "^17.0.0"
+    "standard": "^17.0.0",
+    "typescript": "^5.0.4"
   },
   "dependencies": {
     "minecraft-data": "^3.70.0",
